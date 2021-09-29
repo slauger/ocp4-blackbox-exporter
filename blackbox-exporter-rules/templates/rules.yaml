@@ -1,0 +1,11 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: blackbox-exporter
+  namespace: "{{ .Values.namespace }}"
+spec:
+  groups:
+  - name: blackbox-exporter
+    rules:
+{{ (.Files.Get "rules.yaml") | indent 6 }}

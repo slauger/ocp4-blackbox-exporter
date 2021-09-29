@@ -1,0 +1,7 @@
+---
+namespace: blackbox-exporter
+
+probes:
+  - name: google
+    targets:
+      - https://www.google.com

@@ -1,0 +1,22 @@
+{{- range $probe := .Values.probes }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: "{{ $probe.name }}"
+  namespace: "{{ $.Values.namespace }}"
+spec:
+  jobName: "{{ $probe.name }}"
+  interval: "{{ $probe.interval | default "60s" }}"
+  module: http_2xx
+  prober:
+    url: blackbox-exporter.blackbox-exporter.svc:9115
+    scheme: http
+    path: /probe
+  targets:
+    staticConfig:
+      static:
+{{- range $probe.targets }}
+      - {{ . }}
+{{- end }}
+{{- end }}
